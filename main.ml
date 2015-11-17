@@ -382,7 +382,7 @@ let overlap_main () =
      to specify his own tmp directory (in case of huge file for example). This argument
      would then need to be passed to the make_temp_file_name function.
   *)
-  let tmp_sorted_file1 = Common.make_sorted_temp_file_if_user_wants context.sorted context.file1 in
+  let tmp_sorted_file1 = Common.make_sorted_temp_file_if_user_wants context.sorted context.sortdir context.file1 in
   let u= Common.print_log ("# I have treated (sorted and put in temp file) file1 according to what the user wants\n") in
 
   (* we first open the input and output channels (Note: determine the output chanel according to 

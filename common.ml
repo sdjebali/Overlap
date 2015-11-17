@@ -36,16 +36,25 @@ let print_pb s =
    the file elsewhere than in the /tmp directory of the system, in case of huge file for example.
    In this case the user could specify a place and make_temp_file_name will take another parameter.
    In fact rather than a random number I will add the process id.
+   on 11/13/2013 I corrected the output file of the sorting taking into account sortdir
+   but the release 3.3 does not contain this fix
 *)
-let make_temp_file_name file =
+let make_temp_file_name sortdir file =
   let time = Unix.localtime (Unix.time ()) and pid = Unix.getpid () in 
-    (("/tmp/")^(string_of_int (1+time.Unix.tm_mon))^("_")^(string_of_int time.Unix.tm_mday)^("_")^(string_of_int time.Unix.tm_hour)^"_"^(string_of_int time.Unix.tm_min)^("_")^(string_of_int time.Unix.tm_sec)^("_")^(string_of_int pid));;
+    if (sortdir = "") then
+      (("/tmp/")^(string_of_int (1+time.Unix.tm_mon))^("_")^(string_of_int time.Unix.tm_mday)^("_")^(string_of_int time.Unix.tm_hour)^"_"^(string_of_int time.Unix.tm_min)^("_")^(string_of_int time.Unix.tm_sec)^("_")^(string_of_int pid))
+    else
+      ((sortdir)^("/")^(string_of_int (1+time.Unix.tm_mon))^("_")^(string_of_int time.Unix.tm_mday)^("_")^(string_of_int time.Unix.tm_hour)^"_"^(string_of_int time.Unix.tm_min)^("_")^(string_of_int time.Unix.tm_sec)^("_")^(string_of_int pid));;
 
-let make_sorted_temp_file_if_user_wants sorted file =
-  let tmpfile=make_temp_file_name file in
+
+let make_sorted_temp_file_if_user_wants sorted sortdir file =
+  let tmpfile=make_temp_file_name sortdir file in
     if (not sorted) then
       begin
-	Unix.system (("sort -k1,1 -k4,4n -k5,5n ")^(file)^(" > "^(tmpfile)));
+	if (sortdir = "") then
+	  Unix.system (("sort -k1,1 -k4,4n -k5,5n ")^(file)^(" > "^(tmpfile)))
+	else
+	  Unix.system (("sort -T ")^(sortdir)^(" -k1,1 -k4,4n -k5,5n ")^(file)^(" > "^(tmpfile)));
 	tmpfile;
       end
     else

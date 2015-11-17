@@ -29,8 +29,9 @@ type 'a context_t =
 						   and semicolon to output in ucsc *)
 	  mutable inter: bool;                  (* intersection mode, in case the negative mode is used, reports intersection segments 
 						   rather than file2 feature segments *)
-	  mutable sorted: bool;                 (* boolean for whether file1 is already sorted according to chr, start end 
+	  mutable sorted: bool;                 (* boolean for whether file1 is already sorted according to chr, start, end 
 						   (sort -k1,1 -k4,4n -k5,5n) *)
+	  mutable sortdir: string;              (* directory used for sorting input files *)
 	} 
 
 
@@ -53,13 +54,14 @@ let context =
     ucsc=false;
     inter=false;
     sorted=false;
+    sortdir="";
   };;
 
 
 let usage = 
 " 
                      ********************************************          
-                     *   overlap - version v3.3 (March 2010)    *
+                     *   overlap - version v3.3 (November 2013) *
                      *      Sarah Djebali, Sylvain Foissac      *
                      ********************************************
 
@@ -127,6 +129,8 @@ For each file1 feature, reports some information about the file2 features overla
                   Note: this sorting could be performed outside overlap using the unix sort command: 
                   sort -k1,1 -k4,4n -k5,5n file1 > sortedfile1
 
+   -sd sortdir    directory to be used for sorting the input files in case the default dir is not big enough
+
 ** Please report any bug to sarahqd@gmail.com        
 "
 
@@ -179,6 +183,7 @@ let read_commandline () =
 	  | "-ucsc" -> context.ucsc <- true
 	  | "-inter" -> context.inter <- true
 	  | "-so" -> context.sorted <- true
+	  | "-sd" -> context.sortdir <- getarg true
 	  | "-h"
 	  | "--help" -> Printf.printf "%s\n" usage; exit 1; 
 	  | ""	-> ok := false
