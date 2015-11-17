@@ -63,8 +63,8 @@ overlaptmp: $(CMOFILES)
 
 # Clean up
 clean:
-	@echo "Cleaning .cmo .cmx .o .cmi and binary"
-	@rm -f $(BINFILE) $(CMOFILES) $(CMXFILES) $(CMIFILES) $(OBJFILES) 
+	@echo "Cleaning .cmo .cmx .o and .cmi"
+	@rm -f $(CMOFILES) $(CMXFILES) $(CMIFILES) $(OBJFILES) 
 
 # Dependencies
 depend:
