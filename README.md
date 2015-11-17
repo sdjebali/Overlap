@@ -14,5 +14,6 @@ $ git clone https://github.com/sdjebali/Overlap.git
 $ cd Overlap
 
 $ make
+
 This should produce an executable called overlap that you can use on two gff2 files of your choice-
 Typing overlap with no argument will provide you with the help.
