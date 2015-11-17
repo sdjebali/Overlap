@@ -8,8 +8,11 @@ We provide a pre-compiled binary for linux (64 bit architecture) called overlap,
 For this you will need to have ocaml installed.
 
 Then you just need to follow the steps below:
+
 $ git clone https://github.com/sdjebali/Overlap.git
+
 $ cd Overlap
+
 $ make
 This should produce an executable called overlap that you can use on two gff2 files of your choice-
 Typing overlap with no argument will provide you with the help.
