@@ -59,7 +59,7 @@ let context =
 let usage = 
 " 
                      ********************************************          
-                     *   overlap - version v3.1 (March 2010) *
+                     *   overlap - version v3.3 (March 2010)    *
                      *      Sarah Djebali, Sylvain Foissac      *
                      ********************************************
 
